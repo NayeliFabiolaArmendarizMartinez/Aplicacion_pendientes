@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
       title: 'Mi Aplicación',
       theme: ThemeData(
         useMaterial3: true,
-        colorSchemeSeed: Color.fromARGB(255, 224, 41, 215),
+        colorSchemeSeed: const Color.fromARGB(255, 224, 41, 215),
       ),
       home: const MyHomePage(),
     );
@@ -45,6 +45,8 @@ class _MyHomePageState extends State<MyHomePage> {
     Pendiente(tarea: "Examen de Conmmutacion"),
     Pendiente(tarea: "Sacar una constancia"),
   ];
+  int _selectedRadio = -1; 
+
 
   void _onTabTapped(int index) {
     setState(() {
@@ -86,6 +88,45 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
+   Future<void> _AlertDialogActivado() async {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Modo oscuro'),
+          content: const Text('Activado'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('Cerrar'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+  Future<void> _AlertDialogDesactivado() async {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Modo oscuro'),
+          content: const Text('Desactivado'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('Cerrar'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final List<Widget> screens = [
@@ -110,9 +151,8 @@ class _MyHomePageState extends State<MyHomePage> {
           }).toList(),
         ),
       ),
-      const Center(
-        child: Text('Segunda Pestaña'),
-      ),
+       _buildSecondTab(),
+   
     ];
 
     return Scaffold(
@@ -129,8 +169,8 @@ class _MyHomePageState extends State<MyHomePage> {
             label: 'Tareas',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.list),
-            label: 'Tareas urgentes',
+            icon: Icon(Icons.settings),
+            label: 'Ajustes',
           ),
         ],
       ),
@@ -166,6 +206,57 @@ class _MyHomePageState extends State<MyHomePage> {
           
         },
         child: const Icon(Icons.add),
+      ),
+    );
+  }
+  //-----------------------------------------------
+  Widget _buildSecondTab() {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          const Text(
+            'Modo oscuro:',
+            style: TextStyle(fontSize: 18),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Radio(
+                value: 1,
+                groupValue: _selectedRadio,
+                onChanged: (int? value) {
+                  setState(() {
+                    _selectedRadio = value!;
+                  });
+                },
+              ),
+              const Text('Activado'),
+              Radio(
+                value: 2,
+                groupValue: _selectedRadio,
+                onChanged: (int? value) {
+                  setState(() {
+                    _selectedRadio = value!;
+                  });
+                },
+              ),
+              const Text('Desactivado'),
+            ],
+          ),
+          ElevatedButton(
+            onPressed: () {
+              
+              if (_selectedRadio == 1) {
+                
+                _AlertDialogActivado();
+              } else if (_selectedRadio == 2) {
+                _AlertDialogDesactivado();
+              }
+            },
+            child: const Text('Aceptar'),
+          ),
+        ],
       ),
     );
   }
