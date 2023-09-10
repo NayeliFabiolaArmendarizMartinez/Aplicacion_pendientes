@@ -74,7 +74,7 @@ class _MyHomePageState extends State<MyHomePage> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: const Text('Informacion'),
-          content: const Text('Este es un mensaje con informacion xd'),
+          content: const Text('Nayeli Armendariz 19540439'),
           actions: <Widget>[
             TextButton(
               onPressed: () {
@@ -182,10 +182,10 @@ class _MyHomePageState extends State<MyHomePage> {
               decoration: BoxDecoration(
                 color: Color.fromARGB(255, 214, 9, 9),
               ),
-              child: Text('Drawer Header'),
+              child: Text('Drawer'),
             ),
             ListTile(
-              title: const Text('Agregar tarea al caendario'),
+              title: const Text('Agregar tarea al calendario'),
               onTap: () {
                 
                 _showDatePicker(); // DatePicker
